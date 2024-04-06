@@ -1,0 +1,135 @@
+#board {
+	background: green url("res/ocean.jpg") center center repeat;
+	width: 1300px;
+	height: 700px;
+	border: 10px solid #563101;
+	box-shadow: 0px 20px 0px #3d2505, inset 0px 20px 0px #3d2505;
+	margin: 0px auto;
+}
+
+#submarine {
+	background: transparent url("res/left.png") center center no-repeat;
+	position: relative;
+	top: 30px;
+	left: 600px;
+	width: 150px;
+	height: 150px;
+	margin-bottom: -86px;
+	z-index: 90;
+}
+
+#lanternfish {
+	background: transparent url("res/lanternfish/right.png") center center no-repeat;
+	position: relative;
+	top: 500px;
+	left: 357px;
+	width: 86px;
+	height: 86px;
+	margin-bottom: -86px;
+	z-index: 90;
+}
+
+#macropinna {
+	background: transparent url("res/macropinna/left.png") center center no-repeat;
+	position: relative;
+	top: 600px;
+	left: 700px;
+	width: 100px;
+	height: 72px;
+	margin-bottom: -86px;
+	z-index: 90;
+}
+
+#octopus {
+	background: transparent url("res/octopus/right.png") center center no-repeat;
+	position: relative;
+	top: 300px;
+	left: 600px;
+	width: 87px;
+	height: 92px;
+	margin-bottom: -86px;
+	z-index: 90;
+}
+
+#snapper {
+	background: transparent url("res/snapper/right.png") center center no-repeat;
+	position: relative;
+	top: 450px;
+	left: 200px;
+	width: 100px;
+	height: 83px;
+	margin-bottom: -86px;
+	z-index: 90;
+}
+
+#dolphin {
+	background: transparent url("res/dolphin/right.png") center center no-repeat;
+	position: relative;
+	top: 100px;
+	left: 400px;
+	width: 160px;
+	height: 85px;
+	margin-bottom: -86px;
+	z-index: 90;
+}
+
+#tuna {
+	background: transparent url("res/tuna/left.png") center center no-repeat;
+	position: relative;
+	top: 200px;
+	left: 300px;
+	width: 114px;
+	height: 73px;
+	margin-bottom: -86px;
+	z-index: 90;
+}
+
+.bubble {
+	background: transparent url("res/bubble.png") center center no-repeat;
+	position: relative;
+	width: 20px;
+	height: 20px;
+	margin-bottom: -20px;
+	z-index: 80;
+}
+
+#controls {
+	position: relative;
+	top: 30px;
+	left: 10px;
+	z-index: 99;
+}
+
+.control {
+	background-color: #fafafa;
+	display: inline-block;
+	color: #444444;
+	font-weight: bold;
+	font-size: 20px;
+	font-family: monospace, arial;
+	text-align: center;
+	padding: 5px 0px;
+	border-radius: 3px;
+	box-shadow: 0px 5px 0px #dfdfdf;
+	width: 40px;
+	margin-bottom: 10px;
+	opacity: 0.9;
+}
+
+.control.focus {
+	background-color: #eda240;
+	color: #ffffff;
+	box-shadow: 0px 5px 0px #d0831e;
+	opacity: 1;
+}
+
+#control-w {
+	display: block;
+	position: relative;
+	left: 45px;
+}
+
+#control-p {
+	display: block;
+	width: 130px;
+}

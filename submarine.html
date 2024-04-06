@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Deep submarine simulation</title>
+		<meta charset="utf-8">
+		<link href="submarine.css" rel="stylesheet">
+		<script type="text/javascript" src="modules/tau-prolog.js"></script>
+		<script type="text/prolog" id="submarine.pl">			
+		:- use_module(library(dom)).
+
+% move/3
+% Move the submarine
+move(Submarine, Axis, Incr) :-
+	get_by_id(board, Board),
+	style(Submarine, Axis, px(X0)),
+	X1 is X0+Incr,
+	X1 >= -10,
+	(Axis = top -> X1 =< 640 ; X1 =< 1220),
+	style(Submarine, Axis, px(X1)).
+
+% mov/3 for lanternfish
+move(Lanternfish, Axis, Incr) :-
+    get_by_id(board, Board),
+    style(Lanternfish, Axis, px(X0)),
+    X1 is X0 + Incr,
+    X1 >= -10,
+    (Axis = top -> X1 =< 640 ; X1 =< 1220),
+    style(Lanternfish, Axis, px(X1)).
+
+% mov/3 for macropinna
+move(Macropinna, Axis, Incr) :-
+		get_by_id(board, Board),
+		style(Macropinna, Axis, px(X0)),
+		X1 is X0 + Incr,
+		X1 >= -10,
+		(Axis = top -> X1 =< 640 ; X1 =< 1220),
+		style(Macropinna, Axis, px(X1)).
+	
+% moveT/3 for tuna
+move(Tuna, Axis, Incr) :-
+	get_by_id(board, Board),
+	style(Tuna, Axis, px(X0)),
+	X1 is X0 + Incr,
+	X1 >= -10,
+	(Axis = top -> X1 =< 640 ; X1 =< 1200),
+	style(Tuna, Axis, px(X1)).
+	
+% mov/3 for dolphin
+move(Dolphin, Axis, Incr) :-
+	get_by_id(board, Board),
+	style(Dolphin, Axis, px(X0)),
+	X1 is X0 + Incr,
+	X1 >= -10,
+	(Axis = top -> X1 =< 640 ; X1 =< 1140),
+	style(Dolphin, Axis, px(X1)).
+	
+% mov/3 for octopus
+move(Octopus, Axis, Incr) :-
+	get_by_id(board, Board),
+	style(Octopus, Axis, px(X0)),
+	X1 is X0 + Incr,
+	X1 >= -10,
+	(Axis = top -> X1 =< 640 ; X1 =< 1220),
+	style(Octopus, Axis, px(X1)).
+	
+% mov/3 for snapper
+move(Snapper, Axis, Incr) :-
+	get_by_id(board, Board),
+	style(Snapper, Axis, px(X0)),
+	X1 is X0 + Incr,
+	X1 >= -10,
+	(Axis = top -> X1 =< 640 ; X1 =< 1220),
+	style(Snapper, Axis, px(X1)).
+	
+
+% anim/2
+% Change animation of the submarine
+anim(Submarine, Dir) :-
+	atom_concat('res/', Dir, Src1),
+	atom_concat(Src1, '.png', Src),
+	style(Submarine, backgroundImage, url(Src)).
+
+% anim/2 for lanternfish
+anim(Lanternfish, Dir) :-
+	atom_concat('res/', Dir, Src1),
+	atom_concat(Src1, '.png', Src),
+	style(Lanternfish, backgroundImage, url(Src)).
+
+% anim/2 for macropinna
+anim(Macropinna, Dir) :-
+	atom_concat('res/', Dir, Src1),
+	atom_concat(Src1, '.png', Src),
+	style(Macropinna, backgroundImage, url(Src)).
+
+% anim/2 for tuna
+anim(Tuna, Dir) :-
+	atom_concat('res/', Dir, Src1),
+	atom_concat(Src1, '.png', Src),
+	style(Tuna, backgroundImage, url(Src)).
+		
+% anim/2 for dolphin
+anim(Dolphin, Dir) :-
+	atom_concat('res/', Dir, Src1),
+	atom_concat(Src1, '.png', Src),
+	style(Dolphin, backgroundImage, url(Src)).
+		
+% anim/2 for octopus
+anim(Octopus, Dir) :-
+	atom_concat('res/', Dir, Src1),
+	atom_concat(Src1, '.png', Src),
+	style(Octopus, backgroundImage, url(Src)).
+		
+% anim/2 for snapper
+anim(Snapper, Dir) :-
+	atom_concat('res/', Dir, Src1),
+	atom_concat(Src1, '.png', Src),
+	style(Snapper, backgroundImage, url(Src)).		
+		
+
+% remark_control/1
+% Remark the pressed control
+remark_control(Key) :-
+	clear_controls,
+	atom_concat('control-', Key, Id),
+	get_by_id(Id, Control),
+	add_class(Control, focus).
+
+% clear_control/0
+% Remove the focus class of any control
+clear_controls :-
+	findall(X, (get_by_class(control, X), remove_class(X, focus)), _).
+
+
+% action/2
+% User Input W (up)
+action(Submarine,Lanternfish,Macropinna,Tuna, Dolphin,Octopus, Snapper, w) :-
+    %Set the animation of the submarine and other objects 
+	% to match the direction in which they are moving, accessing file.
+	anim(Submarine, up),         % Change the submarine image to a  facing up.
+	anim(Lanternfish, lanternfish_right),
+	anim(Macropinna, macropinna_left),
+	anim(Octopus,octopus_right),
+	anim(Snapper, snapper_left),
+	anim(Tuna, tuna_left),
+	anim(Dolphin, dolphin_left),
+	
+	%Moves the object in the specified direction and for the specified distance.
+	move(Submarine, top, -5),  %Move the submarine up -5 pixels.
+	move(Lanternfish, left, 1),
+	move(Macropinna, left, -1),
+	move(Octopus, left, 1),
+	move(Snapper, left, -3),
+	move(Tuna, left, -4),
+	move(Dolphin, left, -5).
+
+% User Input S (down)
+action(Submarine, Lanternfish, Macropinna,Tuna, Dolphin, Octopus,Snapper, s) :-
+	anim(Submarine, down),
+	anim(Lanternfish, lanternfish_left),
+    anim(Macropinna, macropinna_right),
+	anim(Octopus,octopus_left),
+	anim(Snapper, snapper_left),
+	anim(Tuna, tuna_left),
+	anim(Dolphin, dolphin_right),
+	move(Submarine, top,  5),
+	move(Lanternfish, left, -1),
+	move(Macropinna, left, 1),
+	move(Octopus, left, -1),
+	move(Snapper, left, -3),
+	move(Tuna, left, -4),
+	move(Dolphin, left, 5).
+
+% User Input A (left)
+action(Submarine,Lanternfish,Macropinna,Tuna,Dolphin, Octopus,Snapper, a) :-
+	anim(Submarine, left),
+    anim(Lanternfish, lanternfish_right),
+	anim(Macropinna, macropinna_left),
+	anim(Octopus,octopus_top),
+	anim(Snapper,snapper_right),
+	anim(Tuna, tuna_right),
+	anim(Dolphin, dolphin_left),
+	move(Submarine, left, -5),
+	move(Lanternfish, left, 1),
+	move(Macropinna, left, -1),
+	move(Octopus, left, 1),
+	move(Snapper, left, 3),
+	move(Tuna, left, 4),
+	move(Dolphin, left, -5).
+
+% User Input D (right)
+action(Submarine,Lanternfish,Macropinna,Tuna,Dolphin,Octopus,Snapper, d) :-
+	anim(Submarine, right),
+	anim(Lanternfish, lanternfish_left),
+	anim(Macropinna, macropinna_right),
+	anim(Octopus,octopus_down),
+	anim(Snapper, snapper_right),
+	anim(Tuna, tuna_right),
+	anim(Dolphin, dolphin_right),
+	move(Submarine, left, 5),
+	move(Lanternfish, left, -1),
+	move(Macropinna, left, 1),
+	move(Octopus, left, -1),
+	move(Snapper, left, 3),
+	move(Tuna, left, 4),
+	move(Dolphin, left, 5).
+
+% bubble
+action(Submarine,Lanternfish, Macropinna, Tuna, Dolphin, Octopus,Snapper, p) :-
+	style(Submarine, top, px(Y0)), style(Submarine, left, px(X0)),
+	Y1 is Y0+50, X1 is X0+37,
+	create(div, Bubble),
+	style(Bubble, top, px(Y1)), style(Bubble, left, px(X1)),
+	add_class(Bubble, bubble),
+	insert_before(Bubble, Submarine).
+
+% init/0 role
+% Initilize the game
+init :-
+    % Obtain the HTML element with ID and unify it with the Prolog variable 
+	get_by_id(submarine, Submarine),   
+	get_by_tag(body, Body),
+	get_by_id(lanternfish, Lanternfish),
+	get_by_id(macropinna, Macropinna),
+	get_by_id(tuna, Tuna),
+	get_by_id(dolphin, Dolphin),
+	get_by_id(octopus, Octopus),
+    get_by_id(snapper, Snapper),
+	
+	%Control actions in the game for keyboard events .
+	bind(Body, keyup, _, clear_controls),
+	bind(Body, keydown, Event, (
+		event_property(Event, key, Key),
+		remark_control(Key),
+		action(Submarine,Lanternfish, Macropinna, Tuna, Dolphin, Octopus,Snapper, Key)
+	)).
+		</script>
+	</head>
+	<body>
+		<!-- Game board container -->
+		<div id="board">
+
+			<div id="lanternfish"></div>
+			<div id="macropinna"></div>
+		    <div id="tuna"></div>
+			<div id="dolphin"></div>
+			<div id="octopus"></div>
+			<div id="snapper"></div>
+			<!-- submarine element representing the game character -->
+			<div id="submarine"></div>
+
+			
+			<!-- Control buttons for game actions -->
+			<div id="controls">
+				<div class="control" id="control-w">w</div>
+				<div class="control" id="control-a">a</div>
+				<div class="control" id="control-s">s</div>
+				<div class="control" id="control-d">d</div>
+				<div class="control" id="control-p">p (bubble)</div>
+			</div>
+		</div>
+		
+		
+		<!-- JavaScript code for initializing the game -->
+		<script type="text/javascript">
+			// Create Tau Prolog session with a timeout of 1000 milliseconds
+			var session = pl.create(1000);
+			
+			// Consult the Prolog program file "submarine.pl"
+			session.consult("submarine.pl", {
+				success: function() {
+					// Query the Prolog goal "init."
+					session.query("init.", {
+						success: function() {
+							// Find answers and initiate the game logic
+							session.answer();
+						}
+					});
+				}
+			});
+		</script>
+	</body>
+</html>
